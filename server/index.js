@@ -1,35 +1,44 @@
-import Eris from "eris";
+import { Client, Intents } from "discord.js";
 import config from "./conf/index.js";
 
 const { BOT_TOKEN, DISCORD_CLIENT_ID } = config;
 
-const bot = new Eris(BOT_TOKEN, {
-    intents: ["guildMessages"]
+const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
+
+bot.once("ready", () => console.log("Bot online"));
+
+bot.on("messageCreate", async message => {
+    if (message.content === "!autoreacts")
+        try {
+            await message.react("🦩");
+            await message.react("🐖");
+            await message.react("🔥");
+            await message.react("🦕");
+            await message.react("🐳");
+            await message.react("👤");
+            await message.react("👾");
+            await message.react("🐙");
+        } catch (error) {
+            console.log("Error posting one or more of the emojis:\t", error);
+        }
 });
 
-bot.on("ready", () => console.log("Bot online"));
-bot.on("error", err => console.log(err));
+bot.on("messageReactionAdd", async (reaction, user) => {
+    if (user.username === "CrappyReactionRoles") return;
 
-// bot.registerCommand("assign", "assign", {
-//     description: "Click 'em to pick 'em",
-//     reactionButtons: [
-//         {
-//             emoji: "💯",
-//             type: "edit",
-//             response: "You know I always keep it 💯 myself"
-//         }
-//     ]
-// });
+    // When a reaction is received, check if the structure is partial
+    if (reaction.partial) {
+        // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
+        try {
+            await reaction.fetch();
+        } catch (error) {
+            console.error("Something went wrong when fetching the message:", error);
+            // Return as `reaction.message.author` may be undefined/null
+            return;
+        }
+    }
 
-bot.on("messageCreate", message => {
-    if (message.content === "!zip") bot.createMessage(message.channel.id, "ZOOP");
-    if (message.content === "!banned?") bot.createMessage(message.channel.id, "uWu no pwease");
-
-    message.addReaction("🛠");
+    reaction.message.reply(`Holy fuck @${user.username} just reacted as a ${reaction.emoji.name}`);
 });
 
-bot.on("interaction", interaction => {
-    bot.createMessage(message.channel.id, JSON.stringify(interaction));
-});
-
-bot.connect();
+bot.login(BOT_TOKEN);
