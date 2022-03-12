@@ -7,6 +7,8 @@ if (process.env.NODE_ENV === "production") {
     // config["DISCORD_CLIENT_ID"] = process.env.DISCORD_CLIENT_ID;
     // config["DISCORD_CLIENT_TOKEN"] = process.env.DISCORD_CLIENT_TOKEN;
     config["BOT_TOKEN"] = process.env.BOT_TOKEN;
+    config["BOT_USERNAME"] = process.env.BOT_USERNAME;
+    config["CHANNEL_TO_WATCH"] = process.env.CHANNEL_TO_WATCH;
     // config["PERMISSIONS_INT"] = process.env.PERMISSIONS_INT;
     // config["GUILD_ID"] = process.env.GUILD_ID;
 } else {

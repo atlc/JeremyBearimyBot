@@ -4,14 +4,14 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "export NODE_ENV=development; nodemon server/index.js"
+        "dev": "export NODE_ENV=development; nodemon server/index.js",
+        "start": "node server/index.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "discord.js": "^13.6.0",
-        "eris": "^0.16.1"
+        "discord.js": "^13.6.0"
     },
     "type": "module",
     "devDependencies": {
