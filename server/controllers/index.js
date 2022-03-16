@@ -2,6 +2,7 @@ import attachSampleReactionsTo from "./samplereacts.js";
 import replyAuthorRolesFrom from "./getpermissions.js";
 import handleAddRoles from "./addpermissions.js";
 import handleRemoveRoles from "./removepermissions.js";
+import pronouns from "./pronouns.js";
 
 const loadUpListeners = bot => {
     // Fires upon a new message being created. This only has specific items to listen for starting with `!`
@@ -9,6 +10,9 @@ const loadUpListeners = bot => {
         switch (message.content) {
             case "!samplereacts":
                 attachSampleReactionsTo(message);
+                break;
+            case "!pronouns":
+                pronouns(message, bot);
                 break;
             case "!checkroles":
                 replyAuthorRolesFrom(message);

@@ -21,6 +21,21 @@ const removepermissions = async (reaction, user) => {
     const reacter = guild.members.cache.get(user.id);
 
     switch (reaction.emoji.name) {
+        case "✨":
+            console.log("a sparkle was unreacted!");
+            break;
+        case "star":
+            console.log("a star was unreacted!");
+            break;
+        case "🌟":
+            console.log("a star2 was unreacted!");
+            break;
+        case "🪐":
+            console.log("a ringed planet was unreacted!");
+            break;
+        case "☀️":
+            console.log("a sunny was unreacted!");
+            break;
         case "🦩":
             reacter.roles.remove(reaction.message.guild.roles.cache.find(role => role.name === "Flamingo").id);
             break;

@@ -9,6 +9,7 @@ if (process.env.NODE_ENV === "production") {
     config["BOT_TOKEN"] = process.env.BOT_TOKEN;
     config["BOT_USERNAME"] = process.env.BOT_USERNAME;
     config["CHANNEL_TO_WATCH"] = process.env.CHANNEL_TO_WATCH;
+    config["ALLOWED_USERS"] = process.env.ALLOWED_USERS;
     // config["PERMISSIONS_INT"] = process.env.PERMISSIONS_INT;
     // config["GUILD_ID"] = process.env.GUILD_ID;
 } else {
