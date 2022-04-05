@@ -21,7 +21,7 @@ export const jeopardy = async message => {
         message.reply(
             `**${capitalCase(category.title)}**, **$${value?.toLocaleString() || "420.69"}**\n\n${removeHTML(
                 question
-            )}\n\nProvide an answer by stating ***!answer ${id} What is YourAnswerHere BottomText***`
+            )}\n\nProvide an answer by stating ***!answer ${id} What is YourAnswerHere BottomText***. If unsuccessful, you may say ***!giveup ${id}*** to get the answer.`
         );
     } catch (error) {
         console.log(error.message);
@@ -59,12 +59,19 @@ const goodReplies = [
 
 export const getAnswer = async message => {
     try {
+        if (message.author.username === "CrappyReactionRoles") return;
+
         const messageID = message.content.split(" ")[1];
         const [clue] = await Query("SELECT * FROM Clues WHERE id=?", [messageID]);
 
         if (clue) {
             const user_answer = message.content.toLowerCase();
-            console.log({ clue, user_answer });
+
+            if (user_answer.includes("!giveup")) {
+                message.reply(`The answer to ${clue.question}:\n\n*${clue.answer}*`);
+                return;
+            }
+
             if (user_answer.includes(clue.answer.toLowerCase())) {
                 message.reply(goodReplies[Math.floor(Math.random() * goodReplies.length)]);
             } else {

@@ -24,7 +24,7 @@ const loadUpListeners = bot => {
                 break;
         }
 
-        if (message.content.includes("!answer")) {
+        if (message.content.includes("!answer") || message.content.includes("!giveup")) {
             getAnswer(message);
         }
     });
