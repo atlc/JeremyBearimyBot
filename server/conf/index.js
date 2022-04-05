@@ -3,30 +3,32 @@ import path from "path";
 
 const config = {};
 
-if (process.env.NODE_ENV === "production") {
-    // config["DISCORD_CLIENT_ID"] = process.env.DISCORD_CLIENT_ID;
-    // config["DISCORD_CLIENT_TOKEN"] = process.env.DISCORD_CLIENT_TOKEN;
-    config["BOT_TOKEN"] = process.env.BOT_TOKEN;
-    config["BOT_USERNAME"] = process.env.BOT_USERNAME;
-    config["CHANNEL_TO_WATCH"] = process.env.CHANNEL_TO_WATCH;
-    config["ALLOWED_USERS"] = process.env.ALLOWED_USERS;
-    // config["PERMISSIONS_INT"] = process.env.PERMISSIONS_INT;
-    // config["GUILD_ID"] = process.env.GUILD_ID;
-} else {
-    console.log("mode:\t" + process.env.NODE_ENV);
-    try {
-        const env = fs.readFileSync(path.join(path.resolve(), ".env")).toString();
-        const kvpGroups = env.split("\n").map(pair => pair.split("="));
+try {
+    const env = fs.readFileSync(path.join(path.resolve(), ".env")).toString();
+    const kvpGroups = env
+        .split("\n")
+        .map(pair => pair.split("="))
+        .filter(arr => arr.length && arr[0]);
 
-        for (const [key, val] of kvpGroups) {
-            config[key] = val;
-        }
+    console.log({ kvpGroups });
 
-        config.CHANNEL_TO_WATCH = process.env.DEV_CHANNEL_TO_WATCH;
-        config.GUILD_ID = process.env.DEV_GUILD_ID;
-    } catch (error) {
-        console.log(error);
+    for (const [key, val] of kvpGroups) {
+        config[key] = val;
     }
+
+    console.log({ config });
+
+    if (process.env.NODE_ENV === "production") {
+        config["CHANNEL_TO_WATCH"] = process.env.CHANNEL_TO_WATCH;
+        config["GUILD_ID"] = process.env.GUILD_ID;
+        config["ALLOWED_USERS"] = process.env.ALLOWED_USERS;
+    } else {
+        config["CHANNEL_TO_WATCH"] = process.env.DEV_CHANNEL_TO_WATCH;
+        config["GUILD_ID"] = process.env.DEV_GUILD_ID;
+        config["ALLOWED_USERS"] = process.env.DEV_ALLOWED_USERS;
+    }
+} catch (error) {
+    console.log(error);
 }
 
 export default config;
