@@ -21,6 +21,9 @@ if (process.env.NODE_ENV === "production") {
         for (const [key, val] of kvpGroups) {
             config[key] = val;
         }
+
+        config.CHANNEL_TO_WATCH = process.env.DEV_CHANNEL_TO_WATCH;
+        config.GUILD_ID = process.env.DEV_GUILD_ID;
     } catch (error) {
         console.log(error);
     }

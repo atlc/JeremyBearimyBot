@@ -1,6 +1,7 @@
 import attachSampleReactionsTo from "./samplereacts.js";
 import replyAuthorRolesFrom from "./getpermissions.js";
 import handleAddRoles from "./addpermissions.js";
+import jeopardy from "./jeopardy.js";
 import handleRemoveRoles from "./removepermissions.js";
 import pronouns from "./pronouns.js";
 
@@ -16,6 +17,10 @@ const loadUpListeners = bot => {
                 break;
             case "!checkroles":
                 replyAuthorRolesFrom(message);
+                break;
+            case "!jeopardy":
+            case "!clue":
+                jeopardy(message);
                 break;
         }
     });
