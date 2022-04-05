@@ -10,13 +10,9 @@ try {
         .map(pair => pair.split("="))
         .filter(arr => arr.length && arr[0]);
 
-    console.log({ kvpGroups });
-
     for (const [key, val] of kvpGroups) {
         config[key] = val;
     }
-
-    console.log({ config });
 
     if (process.env.NODE_ENV === "production") {
         config["CHANNEL_TO_WATCH"] = process.env.CHANNEL_TO_WATCH;
