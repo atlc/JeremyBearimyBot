@@ -44,15 +44,19 @@ export const getAnswer = async message => {
         const messageID = message.content.split(" ")[1];
         const [clue] = await Query("SELECT * FROM Clues WHERE id=?", [messageID]);
 
-        console.log({ clue, useranswer: message.content.toLowerCase() });
-
-        if (message.content.toLowerCase().includes(clue.answer.toLowerCase())) {
-            message.reply(goodReplies[Math.floor(Math.random() * goodReplies.length)]);
+        if (clue) {
+            const user_answer = message.content.toLowerCase();
+            console.log({ clue, user_answer });
+            if (user_answer.includes(clue.answer.toLowerCase())) {
+                message.reply(goodReplies[Math.floor(Math.random() * goodReplies.length)]);
+            } else {
+                message.reply(badReplies[Math.floor(Math.random() * badReplies.length)]);
+            }
         } else {
-            message.reply(badReplies[Math.floor(Math.random() * badReplies.length)]);
+            message.reply("Sorry, no clue with that ID was found (or Andrew broke something again)");
         }
     } catch (error) {
         console.log(error);
-        message.reply(`@ATLC Hey you fucked something up, check the logs`);
+        message.reply(`ATLC broke something, y'all @ him and tell him to check the logs`);
     }
 };
