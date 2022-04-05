@@ -19,7 +19,9 @@ export const jeopardy = async message => {
         await Query("INSERT INTO Clues SET ?", [{ id, answer: answer || "No Answer Provided", question: question || "No Question Provided", value: value || 420.69 }]);
 
         message.reply(
-            `**${capitalCase(category.title)}**, **$${value?.toLocaleString() || "420.69"}**\n\n${removeHTML(question)}\n\nProvide an answer by stating *!answer ${id} Your Answer Here BottomText*`
+            `**${capitalCase(category.title)}**, **$${value?.toLocaleString() || "420.69"}**\n\n${removeHTML(
+                question
+            )}\n\nProvide an answer by stating ***!answer ${id} What is YourAnswerHere BottomText***`
         );
     } catch (error) {
         console.log(error.message);
@@ -30,13 +32,29 @@ const badReplies = [
     "https://giphy.com/gifs/jeopardy-alex-trebek-KZYkfv4hxYk593RwRy",
     "https://giphy.com/gifs/jeopardy-dW0zrWnbtiPC1yaODM",
     "https://giphy.com/gifs/jeopardy--alex-trebek-DCQgmZooPrlDaaaX5m",
-    "https://giphy.com/gifs/jeopardy--alex-trebek-8m5kAYnhmW7S7iLcAw"
+    "https://giphy.com/gifs/jeopardy--alex-trebek-8m5kAYnhmW7S7iLcAw",
+    "https://giphy.com/gifs/jeopardy-gM0Ib2YHs68tfMisDc",
+    "https://giphy.com/gifs/jeopardy-alex-trebek-QBSi1K0yOp1WDGyUFZ",
+    "https://giphy.com/gifs/jeopardy-alex-trebek-H8FNhDLSI2IFrkvBzk",
+    "https://giphy.com/gifs/jeopardy-alex-trebek-H8FNhDLSI2IFrkvBzk",
+    "https://giphy.com/gifs/snl-saturday-night-live-will-ferrell-3o72wEFZZJGu1FcF3i",
+    "https://giphy.com/gifs/snl-saturday-night-live-will-ferrell-xT8pe8XNxplioZnCuc",
+    "https://giphy.com/gifs/snl-jeopardy-black-cyQ9PLf3mkNHO",
+    "https://giphy.com/gifs/snl-saturday-night-live-nice-fV2nYFD3akDuTUgVhy"
 ];
 
 const goodReplies = [
     "https://giphy.com/gifs/jeopardy--alex-trebek-1Be3hETov67HinhAQ8",
-    "https://giphy.com/gifs/jeopardy-alex-trebek-QBSi1K0yOp1WDGyUFZ",
-    "https://giphy.com/gifs/jeopardy--alex-trebek-BcIfjLfWjZQawf1QR7"
+    "https://giphy.com/gifs/jeopardy--alex-trebek-BcIfjLfWjZQawf1QR7",
+    "https://giphy.com/gifs/jeopardy-football-alex-trebek-KfSUEbdncm6k8gCIBr",
+    "https://giphy.com/gifs/jeopardy--alex-trebek-C9EdMKeLbb80dv4OVI",
+    "https://giphy.com/gifs/jeopardy--alex-trebek-1Be3hETov67HinhAQ8",
+    "https://giphy.com/gifs/jeopardy--alex-trebek-BcIfjLfWjZQawf1QR7",
+    "https://giphy.com/gifs/jeopardy--alex-trebek-1kdSvr6X3hGLjt7Z3u",
+    "https://giphy.com/gifs/jeopardy--alex-trebek-fLstPMMZA2upKXScA1",
+    "https://giphy.com/gifs/justin-correct-thats-it-keenen-thompson-26FPnsRww5DbqoPuM",
+    "https://giphy.com/gifs/work-somebody-obscure-XwGVf8gQqt5rG",
+    "https://giphy.com/gifs/snl-imgflip-FHsud3VVwaLgk"
 ];
 
 export const getAnswer = async message => {
