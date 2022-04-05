@@ -1,5 +1,5 @@
 import axios from "axios";
-import Query from "../database";
+import Query from "../database/index.js";
 
 const removeHTML = str => {
     return str.replace(/<[^>]*>/g, "");
@@ -7,12 +7,13 @@ const removeHTML = str => {
 
 const capitalCase = str => {
     const words = str.split(" ");
-    console.log({ words, chopped: words.map(word => word[0].toUpperCase() + word.substring(1)).join(" ") });
     return words.map(word => word[0].toUpperCase() + word.substring(1)).join(" ");
 };
 
 export const jeopardy = async message => {
     try {
+        if (message.author.username === "CrappyReactionRoles") return;
+
         const { question, answer, value, category, id } = (await axios.get("https://jservice.io/api/random")).data[0];
 
         await Query("INSERT INTO Clues SET ?", [{ id, answer: answer || "No Answer Provided", question: question || "No Question Provided", value: value || 420.69 }]);
@@ -43,7 +44,9 @@ export const getAnswer = async message => {
         const messageID = message.content.split(" ")[1];
         const [clue] = await Query("SELECT * FROM Clues WHERE id=?", [messageID]);
 
-        if (message.content.toLowerCase().includes(clue.answer)) {
+        console.log({ clue, useranswer: message.content.toLowerCase() });
+
+        if (message.content.toLowerCase().includes(clue.answer.toLowerCase())) {
             message.reply(goodReplies[Math.floor(Math.random() * goodReplies.length)]);
         } else {
             message.reply(badReplies[Math.floor(Math.random() * badReplies.length)]);
