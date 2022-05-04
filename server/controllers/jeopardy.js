@@ -61,7 +61,9 @@ const COMMONS = [
     "which",
     "go",
     "me",
-    "is"
+    "is",
+    "was",
+    "are"
 ];
 
 const hasMatches = (answer, guess) => {
