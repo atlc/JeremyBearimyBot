@@ -8,7 +8,7 @@ import pronouns from "./pronouns.js";
 const loadUpListeners = bot => {
     // Fires upon a new message being created. This only has specific items to listen for starting with `!`
     bot.on("messageCreate", async message => {
-        switch (message.content) {
+        switch (message.content.toLowerCase()) {
             case "!samplereacts":
                 attachSampleReactionsTo(message);
                 break;
@@ -24,7 +24,7 @@ const loadUpListeners = bot => {
                 break;
         }
 
-        if (message.content.includes("!answer") || message.content.includes("!giveup")) {
+        if (message.content.toLowerCase().includes("!answer") || message.content.toLowerCase().includes("!giveup")) {
             getAnswer(message);
         }
     });
