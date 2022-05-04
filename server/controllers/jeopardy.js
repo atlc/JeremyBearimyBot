@@ -60,7 +60,8 @@ const COMMONS = [
     "get",
     "which",
     "go",
-    "me"
+    "me",
+    "is"
 ];
 
 const hasMatches = (answer, guess) => {
@@ -73,6 +74,7 @@ const hasMatches = (answer, guess) => {
     const userWords = guess
         .toLowerCase()
         .split(" ")
+        .slice(2) // Slice to remove the words of "!answer", "<somenumber>"
         .map(word => word.replace(/\W/g, ""))
         .filter(word => !COMMONS.includes(word));
 
