@@ -10,6 +10,84 @@ const capitalCase = str => {
     return words.map(word => word[0].toUpperCase() + word.substring(1)).join(" ");
 };
 
+const COMMONS = [
+    "the",
+    "be",
+    "to",
+    "of",
+    "and",
+    "a",
+    "in",
+    "that",
+    "have",
+    "i",
+    "it",
+    "for",
+    "not",
+    "on",
+    "with",
+    "he",
+    "as",
+    "you",
+    "do",
+    "at",
+    "this",
+    "but",
+    "his",
+    "by",
+    "from",
+    "they",
+    "we",
+    "say",
+    "her",
+    "she",
+    "or",
+    "an",
+    "will",
+    "my",
+    "one",
+    "all",
+    "would",
+    "there",
+    "their",
+    "what",
+    "so",
+    "up",
+    "out",
+    "if",
+    "about",
+    "who",
+    "get",
+    "which",
+    "go",
+    "me"
+];
+
+const hasMatches = (answer, guess) => {
+    const apiWords = answer
+        .toLowerCase()
+        .split(" ")
+        .map(word => word.replace(/\W/g, ""))
+        .filter(word => !COMMONS.includes(word));
+
+    const userWords = guess
+        .toLowerCase()
+        .split(" ")
+        .map(word => word.replace(/\W/g, ""))
+        .filter(word => !COMMONS.includes(word));
+
+    const matches = [];
+    for (const guess of userWords) {
+        if (apiWords.includes(guess)) matches.push(guess);
+    }
+
+    const weight = (100 * (matches.length / userWords.length)).toFixed(2) + "%";
+
+    console.log({ apiWords, userWords, matches, weight });
+
+    return !!matches.length;
+};
+
 export const jeopardy = async message => {
     try {
         if (message.author.username === "CrappyReactionRoles") return;
@@ -72,7 +150,7 @@ export const getAnswer = async message => {
                 return;
             }
 
-            if (user_answer.includes(clue.answer.toLowerCase())) {
+            if (hasMatches(clue.answer, user_answer)) {
                 message.reply(goodReplies[Math.floor(Math.random() * goodReplies.length)]);
             } else {
                 message.reply(badReplies[Math.floor(Math.random() * badReplies.length)]);
