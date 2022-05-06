@@ -150,7 +150,7 @@ export const getAnswer = async message => {
             const user_answer = message.content.toLowerCase();
 
             if (user_answer.includes("!giveup")) {
-                message.reply(`The answer to ${clue.question}:\n\n*${clue.answer}*`);
+                message.reply(`The answer to ${clue.question}:\n\n|| *${clue.answer}* ||`);
                 return;
             }
 
